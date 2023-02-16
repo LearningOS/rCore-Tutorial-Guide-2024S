@@ -34,7 +34,7 @@ html_search_language = 'zh'
 # ones.
 extensions = [
     "sphinx_comments",
-    "sphinx_tabs.tabs"
+#    "sphinx_tabs.tabs"
 ]
 
 comments_config = {
