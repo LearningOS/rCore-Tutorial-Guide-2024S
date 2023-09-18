@@ -188,8 +188,8 @@ Qemu 模拟器安装
 
 .. code-block:: bash
 
-   git clone https://github.com/LearningOS/rCore-Tutorial-Code-2023S
-   cd rCore-Tutorial-Code-2023S
+   git clone https://github.com/LearningOS/rCore-Tutorial-Code-2023A
+   cd rCore-Tutorial-Code-2023A
 
 我们先运行不需要处理用户代码的 ch1 分支：
 

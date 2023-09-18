@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'rCore-Tutorial-Guide-2023S'
-copyright = 'OS2023Spring'
+project = 'rCore-Tutorial-Guide-2023A'
+copyright = 'OS2023Autumn'
 author = 'Yifan Wu'
 language = 'zh_CN'
 html_search_language = 'zh'
@@ -39,7 +39,7 @@ extensions = [
 
 comments_config = {
    "utterances": {
-       "repo": "LearningOS/rCore-Tutorial-Guide-2023S",
+       "repo": "LearningOS/rCore-Tutorial-Guide-2023A",
        "issue-term": "pathname",
        "label": "comments",
        "theme": "github-light",

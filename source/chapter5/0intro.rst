@@ -23,10 +23,10 @@
 
 .. code-block:: console
 
-   $ git clone https://github.com/LearningOS/rCore-Tutorial-Code-2023S.git
-   $ cd rCore-Tutorial-Code-2023S
+   $ git clone https://github.com/LearningOS/rCore-Tutorial-Code-2023A.git
+   $ cd rCore-Tutorial-Code-2023A
    $ git checkout ch5
-   $ git clone https://github.com/LearningOS/rCore-Tutorial-Test-2023S.git user
+   $ git clone https://github.com/LearningOS/rCore-Tutorial-Test-2023A.git user
 
 请仿照ch4的做法将代码在本地更新并push到自己的实验仓库中。
 
