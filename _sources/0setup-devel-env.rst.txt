@@ -91,29 +91,32 @@ Rust 开发环境配置
 
 .. code-block:: bash
 
-   rustc --version
+   cargo --version
 
 最好把 Rust 包管理器 cargo 镜像地址 crates.io 也替换成中国科学技术大学的镜像服务器，来加速三方库的下载。
-打开或新建 ``~/.cargo/config`` 文件，并把内容修改为：
+打开或新建 ``~/.cargo/config`` 文件，添加以下内容：
 
 .. code-block:: toml
 
    [source.crates-io]
-   registry = "https://github.com/rust-lang/crates.io-index"
    replace-with = 'ustc'
-   [source.ustc]
-   registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 
-同样，也可以使用tuna源 `参见 crates.io 帮助 <https://mirrors.tuna.tsinghua.edu.cn/help/crates.io-index.git/>`_：
+   [source.ustc]
+   registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+
+同样，也可以使用tuna源 `参见 crates.io 帮助 <https://mirrors.tuna.tsinghua.edu.cn/help/crates.io-index/>`_：
 
 .. code-block:: toml
 
    [source.crates-io]
-   replace-with = 'tuna'
+   replace-with = 'mirror'
 
-   [source.tuna]
-   registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
+   [source.mirror]
+   registry = "sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"
 
+.. note::
+
+   这里使用了稀疏索引，无需完整克隆 crates.io-index 仓库，可以加快获取包的速度。为了使用稀疏索引，请保证你安装的 cargo 版本大于等于 1.68。
 
 推荐 JetBrains Clion + Rust插件 或者 Visual Studio Code 搭配 rust-analyzer 和 RISC-V Support 插件 进行代码阅读和开发。
 

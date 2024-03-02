@@ -356,25 +356,29 @@ curl https://sh.rustup.rs -sSf <span class="p">|</span> sh
 </pre></div>
 </div>
 <p>确认一下我们正确安装了 Rust 工具链：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rustc --version
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cargo --version
 </pre></div>
 </div>
 <p>最好把 Rust 包管理器 cargo 镜像地址 crates.io 也替换成中国科学技术大学的镜像服务器，来加速三方库的下载。
-打开或新建 <code class="docutils literal notranslate"><span class="pre">~/.cargo/config</span></code> 文件，并把内容修改为：</p>
+打开或新建 <code class="docutils literal notranslate"><span class="pre">~/.cargo/config</span></code> 文件，添加以下内容：</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[source.crates-io]</span>
-<span class="n">registry</span> <span class="o">=</span> <span class="s">"https://github.com/rust-lang/crates.io-index"</span>
 <span class="n">replace-with</span> <span class="o">=</span> <span class="s">'ustc'</span>
+
 <span class="k">[source.ustc]</span>
-<span class="n">registry</span> <span class="o">=</span> <span class="s">"git://mirrors.ustc.edu.cn/crates.io-index"</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"sparse+https://mirrors.ustc.edu.cn/crates.io-index/"</span>
 </pre></div>
 </div>
-<p>同样，也可以使用tuna源 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/crates.io-index.git/">参见 crates.io 帮助</a>：</p>
+<p>同样，也可以使用tuna源 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/crates.io-index/">参见 crates.io 帮助</a>：</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[source.crates-io]</span>
-<span class="n">replace-with</span> <span class="o">=</span> <span class="s">'tuna'</span>
+<span class="n">replace-with</span> <span class="o">=</span> <span class="s">'mirror'</span>
 
-<span class="k">[source.tuna]</span>
-<span class="n">registry</span> <span class="o">=</span> <span class="s">"https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"</span>
+<span class="k">[source.mirror]</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/"</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>这里使用了稀疏索引，无需完整克隆 crates.io-index 仓库，可以加快获取包的速度。为了使用稀疏索引，请保证你安装的 cargo 版本大于等于 1.68。</p>
 </div>
 <p>推荐 JetBrains Clion + Rust插件 或者 Visual Studio Code 搭配 rust-analyzer 和 RISC-V Support 插件 进行代码阅读和开发。</p>
 <div class="admonition note">
