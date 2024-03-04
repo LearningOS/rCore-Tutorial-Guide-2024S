@@ -3,11 +3,6 @@
 移除标准库依赖
 ==========================
 
-.. toctree::
-   :hidden:
-   :maxdepth: 5
-
-
 首先在 ``os`` 目录下新建 ``.cargo`` 目录，并在这个目录下创建 ``config`` 文件，输入如下内容：
 
 .. code-block:: toml

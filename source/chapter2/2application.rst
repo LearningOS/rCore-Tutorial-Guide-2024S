@@ -1,10 +1,6 @@
 实现应用程序
 ===========================
 
-.. toctree::
-   :hidden:
-   :maxdepth: 5
-
 .. note::
 
     拓展阅读：`RISC-V 特权级机制 <https://rcore-os.github.io/rCore-Tutorial-Book-v3/chapter2/1rv-privilege.html>`_

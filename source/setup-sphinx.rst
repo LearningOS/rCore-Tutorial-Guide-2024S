@@ -1,10 +1,6 @@
 修改和构建本项目
 ====================================
 
-.. toctree::
-   :hidden:
-   :maxdepth: 4
-   
 TL;DR: ``python -m venv .venv`` 创建一个虚拟环境（你也可以使用 conda 等工具），activate 后 ``pip install -r requirements.txt``。
 
 1. 参考 `这里 <https://www.sphinx-doc.org/en/master/usage/installation.html>`_ 安装 Sphinx。
