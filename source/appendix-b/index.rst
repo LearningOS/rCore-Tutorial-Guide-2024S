@@ -277,7 +277,7 @@ make & Makefile
 
 .. code-block:: makefile
    :linenos:
-   :emphasize-lines: 11,12,13,14,15
+   :emphasize-lines: 10-14
 
    KERNEL_ENTRY_PA := 0x80020000
 
