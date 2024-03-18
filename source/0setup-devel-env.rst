@@ -132,7 +132,7 @@ Qemu 模拟器安装
    如果使用 Qemu8，你需要：
 
    * 替换 ``bootloader/rustsbi-qemu.bin`` 为最新版 `在这里下载 <https://github.com/rustsbi/rustsbi-qemu/releases>`_ 后更名为 ``bootloader/rustsbi-qemu.bin`` 并替换同名文件即可
-   * 将 ``os/src/sbi.rs`` 中的常量 ``SBI_SHUTDOWN`` 的值替换为 ``const SBI_SHUTDOWN: usize = 0x53525354;``
+   * 将 ``os/src/sbi.rs`` 中的常量 ``SBI_SHUTDOWN`` 的值替换为 ``const SBI_SHUTDOWN: usize = 0x53525354;``，``SBI_SET_TIMER`` 的值替换为 ``const SBI_SET_TIMER: usize = 0x54494D45;``
    
 .. attention::
 
