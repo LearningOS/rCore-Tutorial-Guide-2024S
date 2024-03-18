@@ -369,7 +369,11 @@
 </li>
 <li><p>如果本地在线编译访问 github 遇到问题，可以对 os/Cargo.toml 中的依赖进行如下替换：</p>
 <blockquote>
-<div></div></blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">riscv</span> <span class="o">=</span> <span class="o">{</span> <span class="nv">git</span> <span class="o">=</span> <span class="s2">"https://gitee.com/rcore-os/riscv"</span>, <span class="nv">features</span> <span class="o">=</span> <span class="o">[</span><span class="s2">"inline-asm"</span><span class="o">]</span> <span class="o">}</span>
+virtio-drivers <span class="o">=</span> <span class="o">{</span> <span class="nv">git</span> <span class="o">=</span> <span class="s2">"https://gitee.com/rcore-os/virtio-drivers"</span>, <span class="nv">rev</span> <span class="o">=</span> <span class="s2">"4ee80e5"</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
 </li>
 <li><p>本地离线运行 CI 脚本的方法（注意 CI 脚本会修改代码仓库的文件，请在运行前暂存改动）：</p>
 <blockquote>

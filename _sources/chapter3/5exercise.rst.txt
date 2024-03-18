@@ -72,10 +72,8 @@ ch3 中，我们的系统已经能够支持多个任务分时轮流运行，我�
 - 如果本地在线编译访问 github 遇到问题，可以对 os/Cargo.toml 中的依赖进行如下替换：
 
    .. code-block:: shell
-      # riscv = { git = "https://github.com/rcore-os/riscv", features = ["inline-asm"] }
+      
       riscv = { git = "https://gitee.com/rcore-os/riscv", features = ["inline-asm"] }
-      # ch6 之后
-      # virtio-drivers = { git = "https://github.com/rcore-os/virtio-drivers", rev = "4ee80e5" }
       virtio-drivers = { git = "https://gitee.com/rcore-os/virtio-drivers", rev = "4ee80e5" }
 
 
