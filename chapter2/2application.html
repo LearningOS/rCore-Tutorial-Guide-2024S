@@ -275,12 +275,12 @@
 </div>
 <p>应用程序、用户库（包括入口函数、初始化函数、I/O函数和系统调用接口等多个rs文件组成）放在项目根目录的 <code class="docutils literal notranslate"><span class="pre">user</span></code> 目录下：</p>
 <ul class="simple">
-<li><p>user/src/bin/<a href="#id3"><span class="problematic" id="id4">*</span></a>.rs：各个应用程序</p></li>
-<li><p>user/src/<a href="#id5"><span class="problematic" id="id6">*</span></a>.rs：用户库（包括入口函数、初始化函数、I/O函数和系统调用接口等）</p></li>
-<li><p>user/src/linker.ld：应用程序的内存布局说明</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user/src/bin/*.rs</span></code> ：各个应用程序</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user/src/*.rs</span></code> ：用户库（包括入口函数、初始化函数、I/O函数和系统调用接口等）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user/src/linker.ld</span></code> ：应用程序的内存布局说明</p></li>
 </ul>
-<div class="section" id="id7">
-<h3>项目结构<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id3">
+<h3>项目结构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">user/src/bin</span></code> 里面有多个文件，其中三个是：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">hello_world</span></code>：在屏幕上打印一行 <code class="docutils literal notranslate"><span class="pre">Hello,</span> <span class="pre">world!</span></code></p></li>
@@ -325,8 +325,8 @@
 链接器会使用 <code class="docutils literal notranslate"><span class="pre">bin</span></code> 目录下的函数作为 <code class="docutils literal notranslate"><span class="pre">main</span></code> 。
 如果在 <code class="docutils literal notranslate"><span class="pre">bin</span></code> 目录下找不到任何 <code class="docutils literal notranslate"><span class="pre">main</span></code> ，那么编译也能通过，但会在运行时报错。</p>
 </div>
-<div class="section" id="id8">
-<h3>内存布局<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id4">
+<h3>内存布局<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>我们使用链接脚本 <code class="docutils literal notranslate"><span class="pre">user/src/linker.ld</span></code> 规定用户程序的内存布局：</p>
 <ul class="simple">
 <li><p>将程序的起始物理地址调整为 <code class="docutils literal notranslate"><span class="pre">0x80400000</span></code> ，三个应用程序都会被加载到这个物理地址上运行；</p></li>
@@ -336,16 +336,16 @@
 </ul>
 <p>其余的部分和第一章基本相同。</p>
 </div>
-<div class="section" id="id9">
-<h3>系统调用<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id5">
+<h3>系统调用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
 <p>在子模块 <code class="docutils literal notranslate"><span class="pre">syscall</span></code> 中我们来通过 <code class="docutils literal notranslate"><span class="pre">ecall</span></code> 调用批处理系统提供的接口，
 由于应用程序运行在用户态（即 U 模式）， <code class="docutils literal notranslate"><span class="pre">ecall</span></code> 指令会触发名为 <code class="docutils literal notranslate"><span class="pre">Environment</span> <span class="pre">call</span> <span class="pre">from</span> <span class="pre">U-mode</span></code> 的异常，
 并 Trap 进入 S 模式执行批处理系统针对这个异常特别提供的服务程序。
 这个接口被称为 ABI 或者系统调用。
 现在我们不关心 S 态的批处理系统如何提供应用程序所需的功能，只考虑如何使用它。</p>
 <p>在本章中，应用程序和批处理系统约定如下两个系统调用：</p>
-<div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-text">第二章新增系统调用</span><a class="headerlink" href="#id11" title="永久链接至代码">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">第二章新增系统调用</span><a class="headerlink" href="#id7" title="永久链接至代码">¶</a></div>
 <div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// 功能：将内存中缓冲区中的数据写入文件。</span>
 <span class="sd">/// 参数：`fd` 表示待写入文件的文件描述符；</span>
 <span class="sd">///      `buf` 表示内存中缓冲区的起始地址；</span>
@@ -428,8 +428,8 @@ Rust 编译器无法判定汇编代码的安全性，所以我们需要将其包
 传入到 <code class="docutils literal notranslate"><span class="pre">write</span></code> 的 <code class="docutils literal notranslate"><span class="pre">fd</span></code> 参数设置为 1，代表标准输出 STDOUT，暂时不用考虑其他的 <code class="docutils literal notranslate"><span class="pre">fd</span></code> 选取情况。</p>
 </div>
 </div>
-<div class="section" id="id10">
-<h2>编译生成应用程序二进制码<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h2>编译生成应用程序二进制码<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p>简要介绍一下应用程序的构建，在 <code class="docutils literal notranslate"><span class="pre">user</span></code> 目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build</span></code>：</p>
 <ol class="arabic simple">
 <li><p>对于 <code class="docutils literal notranslate"><span class="pre">src/bin</span></code> 下的每个应用程序，
@@ -496,12 +496,12 @@ Rust 编译器无法判定汇编代码的安全性，所以我们需要将其包
             <ul>
 <li><a class="reference internal" href="#">实现应用程序</a><ul>
 <li><a class="reference internal" href="#id2">应用程序设计</a><ul>
-<li><a class="reference internal" href="#id7">项目结构</a></li>
-<li><a class="reference internal" href="#id8">内存布局</a></li>
-<li><a class="reference internal" href="#id9">系统调用</a></li>
+<li><a class="reference internal" href="#id3">项目结构</a></li>
+<li><a class="reference internal" href="#id4">内存布局</a></li>
+<li><a class="reference internal" href="#id5">系统调用</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">编译生成应用程序二进制码</a></li>
+<li><a class="reference internal" href="#id6">编译生成应用程序二进制码</a></li>
 </ul>
 </li>
 </ul>

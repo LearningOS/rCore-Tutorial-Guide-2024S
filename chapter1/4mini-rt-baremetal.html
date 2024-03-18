@@ -466,6 +466,27 @@ RustSBI 约定的 <code class="docutils literal notranslate"><span class="pre">0
 标记为 <code class="docutils literal notranslate"><span class="pre">#[no_mangle]</span></code> 以避免编译器对它的名字进行混淆，不然在链接时，
 <code class="docutils literal notranslate"><span class="pre">entry.asm</span></code> 将找不到 <code class="docutils literal notranslate"><span class="pre">main.rs</span></code> 提供的外部符号 <code class="docutils literal notranslate"><span class="pre">rust_main</span></code>，导致链接失败。</p>
 <p>再次使用上节中的编译，生成和运行操作，我们看到QEMU模拟的RISC-V 64计算机 <strong>优雅</strong> 地退出了！</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>教程使用的 RustSBI 版本比代码框架稍旧，输出有所不同
+<span class="gp">$ </span>qemu-system-riscv64 <span class="se">\</span>
+<span class="gp">&gt; </span>-machine virt <span class="se">\</span>
+<span class="gp">&gt; </span>-nographic <span class="se">\</span>
+<span class="gp">&gt; </span>-bios ../bootloader/rustsbi-qemu.bin <span class="se">\</span>
+<span class="gp">&gt; </span>-device loader,file<span class="o">=</span>target/riscv64gc-unknown-none-elf/release/os.bin,addr<span class="o">=</span>0x80200000
+<span class="go">[rustsbi] Version 0.1.0</span>
+<span class="go">.______       __    __      _______.___________.  _______..______   __</span>
+<span class="go">|   _  \     |  |  |  |    /       |           | /       ||   _  \ |  |</span>
+<span class="go">|  |_)  |    |  |  |  |   |   (----`---|  |----`|   (----`|  |_)  ||  |</span>
+<span class="go">|      /     |  |  |  |    \   \       |  |      \   \    |   _  &lt; |  |</span>
+<span class="go">|  |\  \----.|  `--'  |.----)   |      |  |  .----)   |   |  |_)  ||  |</span>
+<span class="go">| _| `._____| \______/ |_______/       |__|  |_______/    |______/ |__|</span>
+
+<span class="go">[rustsbi] Platform: QEMU</span>
+<span class="go">[rustsbi] misa: RV64ACDFIMSU</span>
+<span class="go">[rustsbi] mideleg: 0x222</span>
+<span class="go">[rustsbi] medeleg: 0xb1ab</span>
+<span class="go">[rustsbi] Kernel entry: 0x80200000</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="bss">
 <h2>清空 .bss 段<a class="headerlink" href="#bss" title="永久链接至标题">¶</a></h2>

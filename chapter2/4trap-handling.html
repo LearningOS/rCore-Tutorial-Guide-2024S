@@ -345,6 +345,26 @@
 但是在正式进入 S 特权级的 Trap 处理之前，我们必须保存原控制流的寄存器状态，这一般通过栈来完成。
 但我们需要用专门为操作系统准备的内核栈，而不是应用程序运行时用到的用户栈。</p>
 <p>我们声明两个类型 <code class="docutils literal notranslate"><span class="pre">KernelStack</span></code> 和 <code class="docutils literal notranslate"><span class="pre">UserStack</span></code> 分别表示用户栈和内核栈，它们都只是字节数组的简单包装：</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// os/src/batch.rs</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="cp">#[repr(align(4096))]</span><span class="w"></span>
+<span class="linenos"> 4</span><span class="k">struct</span> <span class="nc">KernelStack</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="n">data</span>: <span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="n">KERNEL_STACK_SIZE</span><span class="p">],</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="cp">#[repr(align(4096))]</span><span class="w"></span>
+<span class="linenos"> 9</span><span class="k">struct</span> <span class="nc">UserStack</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">10</span><span class="w">  </span><span class="n">data</span>: <span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="n">USER_STACK_SIZE</span><span class="p">],</span><span class="w"></span>
+<span class="linenos">11</span><span class="p">}</span><span class="w"></span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">static</span><span class="w"> </span><span class="n">KERNEL_STACK</span>: <span class="nc">KernelStack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KernelStack</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">14</span><span class="w">  </span><span class="n">data</span>: <span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">KERNEL_STACK_SIZE</span><span class="p">],</span><span class="w"></span>
+<span class="linenos">15</span><span class="p">};</span><span class="w"></span>
+<span class="linenos">16</span><span class="k">static</span><span class="w"> </span><span class="n">USER_STACK</span>: <span class="nc">UserStack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserStack</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">17</span><span class="w">  </span><span class="n">data</span>: <span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">USER_STACK_SIZE</span><span class="p">],</span><span class="w"></span>
+<span class="linenos">18</span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
 <p>两个栈以全局变量的形式实例化在批处理操作系统的 <code class="docutils literal notranslate"><span class="pre">.bss</span></code> 段中。</p>
 <p>我们为两个类型实现了 <code class="docutils literal notranslate"><span class="pre">get_sp</span></code> 方法来获取栈顶地址。由于在 RISC-V 中栈是向下增长的，
 我们只需返回包裹的数组的结尾地址，以用户栈类型 <code class="docutils literal notranslate"><span class="pre">UserStack</span></code> 为例：</p>

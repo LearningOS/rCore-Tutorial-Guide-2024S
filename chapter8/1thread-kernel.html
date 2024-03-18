@@ -349,7 +349,7 @@
 <span class="linenos">10</span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>waittid 等待一个线程标识符的值为tid 的线程结束。在具体实现方面，我们看到当 sys_waittid 返回值为 -2 ，即要等待的线程存在但它却尚未退出的时候，主线程调用 <a href="#id19"><span class="problematic" id="id20">yield_</span></a> 主动交出 CPU 使用权，待下次 CPU 使用权被内核交还给它的时候再次调用 sys_waittid 查看要等待的线程是否退出。这样做是为了减小 CPU 资源的浪费。这种方法是为了尽可能简化内核的实现。</p>
+<p>waittid 等待一个线程标识符的值为tid 的线程结束。在具体实现方面，我们看到当 sys_waittid 返回值为 -2 ，即要等待的线程存在但它却尚未退出的时候，主线程调用 <code class="docutils literal notranslate"><span class="pre">yield_</span></code> 主动交出 CPU 使用权，待下次 CPU 使用权被内核交还给它的时候再次调用 sys_waittid 查看要等待的线程是否退出。这样做是为了减小 CPU 资源的浪费。这种方法是为了尽可能简化内核的实现。</p>
 </div>
 <div class="section" id="threads">
 <h3>多线程应用程序 – threads<a class="headerlink" href="#threads" title="永久链接至标题">¶</a></h3>
@@ -487,16 +487,16 @@
 </div>
 <div class="section" id="id13">
 <h2>线程管理机制的设计与实现<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
-<p>在上述线程模型和内核数据结构的基础上，我们还需完成线程管理的基本实现，从而构造出一个完整的“达科塔盗龙”操作系统。
+<p>在上述线程模型和内核数据结构的基础上，我们还需完成线程管理的基本实现，从而构造出一个完整的“达科塔盗龙”<a class="footnote-reference brackets" href="#dak" id="id14">1</a> 操作系统。
 本节将分析如何实现线程管理：</p>
 <ul class="simple">
 <li><p>线程创建、线程退出与等待线程结束</p></li>
 <li><p>线程执行中的特权级切换</p></li>
 </ul>
-<div class="section" id="id14">
-<h3>线程创建、线程退出与等待线程结束<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
 <div class="section" id="id15">
-<h4>线程创建<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h4>
+<h3>线程创建、线程退出与等待线程结束<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id16">
+<h4>线程创建<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h4>
 <p>当一个进程执行中发出了创建线程的系统调用 <code class="docutils literal notranslate"><span class="pre">sys_thread_create</span></code> 后，操作系统就需要在当前进程的基础上创建一个线程了，
 这里重点是需要了解创建线程控制块，在线程控制块中初始化各个成员变量，建立好进程和线程的关系等。
 只有建立好这些成员变量，才能给线程建立一个灵活方便的执行环境。这里列出支持线程正确运行所需的重要的执行环境要素：</p>
@@ -555,8 +555,8 @@
 保证在 Trap 的时候用户态的线程能正确进入内核态。</p></li>
 </ul>
 </div>
-<div class="section" id="id16">
-<h4>线程退出<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h4>
+<div class="section" id="id17">
+<h4>线程退出<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h4>
 <p>当一个非主线程的其他线程发出 <code class="docutils literal notranslate"><span class="pre">sys_exit</span></code> 系统调用时，内核会调用 <code class="docutils literal notranslate"><span class="pre">exit_current_and_run_next</span></code>
 函数退出当前线程并切换到下一个线程，但不会导致其所属进程的退出。当 <strong>主线程</strong> 即进程发出这个系统调用，
 内核会回收整个进程（这包括了其管理的所有线程）资源，并退出。具体实现如下：</p>
@@ -632,8 +632,8 @@
 </ul>
 <p>上述实现中很大一部分与第五章讲解的 进程的退出 的功能实现大致相同。</p>
 </div>
-<div class="section" id="id17">
-<h4>等待线程结束<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h4>
+<div class="section" id="id18">
+<h4>等待线程结束<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h4>
 <p>主线程通过系统调用 <code class="docutils literal notranslate"><span class="pre">sys_waittid</span></code> 来等待其他线程的结束。具体实现如下：</p>
 <div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// os/src/syscall/ch8b_thread.rs</span>
 <span class="linenos"> 2</span>
@@ -675,12 +675,12 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id18">
-<h3>线程执行中的特权级切换和调度切换<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id19">
+<h3>线程执行中的特权级切换和调度切换<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
 <p>线程执行中的特权级切换与第三章中 <strong>任务切换的设计与实现</strong> 小节中讲解的过程是一致的。而线程执行中的调度切换过程与第五章的 <strong>进程调度机制</strong> 小节中讲解的过程是一致的。
 这里就不用再赘述一遍了。</p>
 <dl class="footnote brackets">
-<dt class="label" id="dak"><span class="brackets">1</span></dt>
+<dt class="label" id="dak"><span class="brackets"><a class="fn-backref" href="#id14">1</a></span></dt>
 <dd><p>达科塔盗龙是一种生存于距今6700万-6500万年前白垩纪晚期的兽脚类驰龙科恐龙，它主打的并不是霸王龙的力量路线，而是利用自己修长的后肢来提高敏捷度和奔跑速度。它全身几乎都长满了羽毛，可能会滑翔或者其他接近飞行行为的行动模式。</p>
 </dd>
 </dl>
@@ -762,13 +762,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#id13">线程管理机制的设计与实现</a><ul>
-<li><a class="reference internal" href="#id14">线程创建、线程退出与等待线程结束</a><ul>
-<li><a class="reference internal" href="#id15">线程创建</a></li>
-<li><a class="reference internal" href="#id16">线程退出</a></li>
-<li><a class="reference internal" href="#id17">等待线程结束</a></li>
+<li><a class="reference internal" href="#id15">线程创建、线程退出与等待线程结束</a><ul>
+<li><a class="reference internal" href="#id16">线程创建</a></li>
+<li><a class="reference internal" href="#id17">线程退出</a></li>
+<li><a class="reference internal" href="#id18">等待线程结束</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id18">线程执行中的特权级切换和调度切换</a></li>
+<li><a class="reference internal" href="#id19">线程执行中的特权级切换和调度切换</a></li>
 </ul>
 </li>
 </ul>
