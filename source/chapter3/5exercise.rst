@@ -69,6 +69,25 @@ ch3 中，我们的系统已经能够支持多个任务分时轮流运行，我�
    你需要在编译时指定 ``BASE=0`` 控制框架仅编译实验测例（在 os 目录执行 ``make run BASE=0``），
    或指定 ``BASE=2`` 控制框架同时编译基础测例和实验测例。
 
+- 如果本地在线编译访问 github 遇到问题，可以对 os/Cargo.toml 中的依赖进行如下替换：
+
+   .. code-block:: shell
+      # riscv = { git = "https://github.com/rcore-os/riscv", features = ["inline-asm"] }
+      riscv = { git = "https://gitee.com/rcore-os/riscv", features = ["inline-asm"] }
+      # ch6 之后
+      # virtio-drivers = { git = "https://github.com/rcore-os/virtio-drivers", rev = "4ee80e5" }
+      virtio-drivers = { git = "https://gitee.com/rcore-os/virtio-drivers", rev = "4ee80e5" }
+
+
+- 本地离线运行 CI 脚本的方法（注意 CI 脚本会修改代码仓库的文件，请在运行前暂存改动）：
+
+   .. code-block:: shell
+
+      git clone git@git.tsinghua.edu.cn:os-lab/2024s/public/rcore-tutorial-checker-2024s.git ci-user
+      git clone git@git.tsinghua.edu.cn:os-lab/2024s/public/rcore-tutorial-test-2024s.git ci-user/user
+      cd ci-user && make test CHAPTER=$ID OFFLINE=1
+
+
 .. note::
 
     你的实现只需且必须通过测例，建议读者感到困惑时先检查测例。
