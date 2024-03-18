@@ -3,10 +3,6 @@
 构建用户态执行环境
 =================================
 
-.. toctree::
-   :hidden:
-   :maxdepth: 5
-
 .. note::
 
   前三小节的用户态程序案例代码在 `此处 <https://github.com/LearningOS/rCore-Tutorial-Book-2021Autumn/tree/ch2-U-nostd>`_ 获取。
