@@ -370,7 +370,7 @@ curl https://sh.rustup.rs -sSf <span class="p">|</span> sh
 <p>如果使用 Qemu8，你需要：</p>
 <ul class="simple">
 <li><p>替换 <code class="docutils literal notranslate"><span class="pre">bootloader/rustsbi-qemu.bin</span></code> 为最新版 <a class="reference external" href="https://github.com/rustsbi/rustsbi-qemu/releases">在这里下载</a> 后更名为 <code class="docutils literal notranslate"><span class="pre">bootloader/rustsbi-qemu.bin</span></code> 并替换同名文件即可</p></li>
-<li><p>将 <code class="docutils literal notranslate"><span class="pre">os/src/sbi.rs</span></code> 中的常量 <code class="docutils literal notranslate"><span class="pre">SBI_SHUTDOWN</span></code> 的值替换为 <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">SBI_SHUTDOWN:</span> <span class="pre">usize</span> <span class="pre">=</span> <span class="pre">0x53525354;</span></code></p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">os/src/sbi.rs</span></code> 中的常量 <code class="docutils literal notranslate"><span class="pre">SBI_SHUTDOWN</span></code> 的值替换为 <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">SBI_SHUTDOWN:</span> <span class="pre">usize</span> <span class="pre">=</span> <span class="pre">0x53525354;</span></code>，<code class="docutils literal notranslate"><span class="pre">SBI_SET_TIMER</span></code> 的值替换为 <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">SBI_SET_TIMER:</span> <span class="pre">usize</span> <span class="pre">=</span> <span class="pre">0x54494D45;</span></code></p></li>
 </ul>
 </div>
 <div class="admonition attention">
