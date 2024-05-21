@@ -807,7 +807,7 @@
 <li><p>第 39 行获取源码目录中的每个应用的源代码文件并去掉后缀名，收集到向量 <code class="docutils literal notranslate"><span class="pre">apps</span></code> 中。</p></li>
 <li><p>第 48 行开始，枚举 <code class="docutils literal notranslate"><span class="pre">apps</span></code> 中的每个应用，从放置应用执行程序的目录中找到对应应用的 ELF 文件（这是一个 HostOS 上的文件）并将数据读入内存。接着需要在我们的 easy-fs 中创建一个同名文件并将 ELF 数据写入到这个文件中。这个过程相当于将 HostOS 上的文件系统中的一个文件复制到我们的 easy-fs 中。</p></li>
 </ul>
-<p>尽管没有进行任何同步写回磁盘的操作，我们也不用担心块缓存中的修改没有写回磁盘。因为在 <code class="docutils literal notranslate"><span class="pre">easy-fs-fuse</span></code> 这个应用正常退出的过程中，块缓存因生命周期结束会被回收，届时如果 <code class="docutils literal notranslate"><span class="pre">modified</span></code> 标志为 true 就会将修改写回磁盘。</p>
+<p>尽管没有进行任何同步写回磁盘的操作，我们也不用担心块缓存中的修改没有写回磁盘。因为在 <code class="docutils literal notranslate"><span class="pre">easy-fs</span></code> 操作过程中实现了 <code class="docutils literal notranslate"><span class="pre">block_cache_sync_all</span></code> 函数用以写回每次操作的结果。</p>
 </div>
 </div>
 
